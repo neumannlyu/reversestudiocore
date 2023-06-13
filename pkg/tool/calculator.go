@@ -32,9 +32,19 @@ func ramLayout(v interface{}, endian int) (string, error) {
     if bytes == 4 {
         data := make([]byte, 4)
         if endian == LITTLE_ENDIAN {
-            binary.LittleEndian.PutUint32(data, v.(uint32))
+            switch valueOfType := v.(type) {
+            case int32:
+                binary.LittleEndian.PutUint32(data, uint32(valueOfType))
+            case uint32:
+                binary.LittleEndian.PutUint32(data, valueOfType)
+            }
         } else if endian == BIG_ENDIAN {
-            binary.BigEndian.PutUint32(data, v.(uint32))
+            switch valueOfType := v.(type) {
+            case int32:
+                binary.BigEndian.PutUint32(data, uint32(valueOfType))
+            case uint32:
+                binary.BigEndian.PutUint32(data, valueOfType)
+            }
         }
         // ram arrangement
         var ram string
@@ -46,9 +56,19 @@ func ramLayout(v interface{}, endian int) (string, error) {
     } else if bytes == 8 {
         data := make([]byte, 8)
         if endian == LITTLE_ENDIAN {
-            binary.LittleEndian.PutUint64(data, v.(uint64))
+            switch valueOfType := v.(type) {
+            case int64:
+                binary.LittleEndian.PutUint64(data, uint64(valueOfType))
+            case uint64:
+                binary.LittleEndian.PutUint64(data, valueOfType)
+            }
         } else if endian == BIG_ENDIAN {
-            binary.BigEndian.PutUint64(data, v.(uint64))
+            switch valueOfType := v.(type) {
+            case int64:
+                binary.BigEndian.PutUint64(data, uint64(valueOfType))
+            case uint64:
+                binary.BigEndian.PutUint64(data, valueOfType)
+            }
         }
         // ram arrangement
         var ram string
